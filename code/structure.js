@@ -49,21 +49,63 @@ class House extends Structure {
         let cX = numOfTilesX/2;
         let cY = numOfTilesY/2;
 
-        for (let i = cX-this.floorSize; i < cX+this.floorSize; i++) {
+        for (let i = cX-this.floorSize; i < cX+this.floorSize-1; i++) {
 
-            for (let j = cY-this.floorSize; j < cY+this.floorSize; j++) {
+            for (let j = cY-this.floorSize; j < cY+this.floorSize-1; j++) {
                 tiles[i][j].collapse("Wall");
             }
         }
 
-        for (let i = cX-this.floorSize+1; i < cX+this.floorSize-1; i++) {
+        for (let i = cX-this.floorSize+1; i < cX+this.floorSize-2; i++) {
 
-            for (let j = cY-this.floorSize+1; j < cY+this.floorSize-1; j++) {
+            for (let j = cY-this.floorSize+1; j < cY+this.floorSize-2; j++) {
                 tiles[i][j].collapse("Wood");
-                tiles[i][j].furnish();
+                tiles[i][j].furnishHouse();
             }
         }
 
-        tiles[cX][cY+this.floorSize-1].collapse("Wood");
+        tiles[cX][cY+this.floorSize].collapse("Wood");
+    }
+}
+
+
+
+class Pyramid extends Structure {
+    constructor(x, y) {
+        super(x, y, 4);
+    }
+
+    openLayer() {
+        super.openLayer(Math.floor(numOfTilesX/2), Math.floor(numOfTilesY/2+this.floorSize/2+1));
+    }
+
+    structureLayout() {
+        super.structureLayout();
+
+        let cX = numOfTilesX/2;
+        let cY = numOfTilesY/2;
+
+        for (let i = cX-this.floorSize; i < cX+this.floorSize-1; i++) {
+
+            for (let j = cY-this.floorSize; j < cY+this.floorSize-1; j++) {
+                tiles[i][j].collapse("PyramidWall");
+            }
+        }
+
+        for (let i = cX-this.floorSize+1; i < cX+this.floorSize-2; i++) {
+
+            for (let j = cY-this.floorSize+1; j < cY+this.floorSize-2; j++) {
+                tiles[i][j].collapse("PyramidFloor");
+            }
+        }
+
+        tiles[cX-this.floorSize+1][cY-this.floorSize+1].collapse("PyramidTorch");
+        tiles[cX-this.floorSize+1][cY+this.floorSize-1].collapse("PyramidTorch");
+        tiles[cX+this.floorSize-1][cY-this.floorSize+1].collapse("PyramidTorch");
+        tiles[cX+this.floorSize-1][cY+this.floorSize-1].collapse("PyramidTorch");
+
+        tiles[cX][cY].collapse("Sarcophagus");
+
+        tiles[cX][cY+this.floorSize-1].collapse("PyramidFloor");
     }
 }

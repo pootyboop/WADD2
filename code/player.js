@@ -88,6 +88,8 @@ class Player {
         this.logs++;
         return true;
 
+      case "Sarcophagus":
+
       case "Mountain":
       case "Wall":
       case "Table":
@@ -105,6 +107,10 @@ class Player {
 
       case "House":
         structure = new House(this.x, this.y);
+        return false;
+
+      case "Pyramid":
+        structure = new Pyramid(this.x, this.y);
         return false;
         
      case "None":

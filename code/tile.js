@@ -291,9 +291,12 @@ class Tile {
     }
   }
 
-  furnish() {
-    if (this.seedRandom() < .2 && this.countAdjacent("Wall") >= 1) {
+  furnishHouse() {
+    if (this.seedRandom() < .2 && this.countAllNear("Wall") >= 3) {
       this.collapse("Table");
+    }
+    else if (this.seedRandom() < .2 && this.countAllNear("Table") >= 1) {
+      this.collapse("Stool");
     }
   }
   
