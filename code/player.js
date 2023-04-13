@@ -4,7 +4,7 @@ class Player {
     this.x = x;
     this.y = y;
 
-    this.logs = 0;
+    this.inventory = new Inv();
 
     this.img = loadImage('images/Player.png');
   }
@@ -79,26 +79,27 @@ class Player {
   interact(targetTile) {
     switch (targetTile.possibilities[0]) {
 
+      case "Sarcophagus":
+      case "Mountain":
+      case "Wall":
+      case "PyramidWall":
+      case "BoatWheel":
+      case "Table":
+        return false;
+
       case "Tree":
         targetTile.collapse("Log");
         return false;
 
       case "Log":
         targetTile.collapse("Grass");
-        this.logs++;
+        this.inventory.logs++;
         return true;
-
-      case "Sarcophagus":
-
-      case "Mountain":
-      case "Wall":
-      case "Table":
-        return false;
       
       case "Water":
         if (this.logs > 0) {
           targetTile.collapse("LogWater");
-          this.logs--;
+          this.inventory.logs--;
         }
         return false;
 
@@ -109,9 +110,13 @@ class Player {
         structure = new House(this.x, this.y);
         return false;
 
-      case "Pyramid":
-        structure = new Pyramid(this.x, this.y);
-        return false;
+        case "Pyramid":
+          structure = new Pyramid(this.x, this.y);
+          return false;
+
+        case "Boat":
+          structure = new Boat(this.x, this.y);
+          return false;
         
      case "None":
         structure.closeLayer();
