@@ -2,16 +2,25 @@ html, body {
     height: 100%;
   }
   
-  body {
-    background-color: #1b1b1b;
+body {
+  background-color: #000000;
 
-    padding: 0;
-    margin: 0;
-    display: flex;
-  
-    /* This centers our sketch horizontally. */
-    justify-content: center;
-  
-    /* This centers our sketch vertically. */
-    align-items: center;
-  }
+  padding: 0;
+  margin: 0;
+  display: flex;
+
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  text-align: center;
+}
+
+h1 {
+  font-size: 100px;
+}

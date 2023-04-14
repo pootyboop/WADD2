@@ -8,7 +8,7 @@ class WaveFunctionCollapseManager {
     WFC(x, y) {
         this.isGenerating = true;
 
-        background(100);
+        background(0);
         this.initTiles();
         this.newSeed();
         console.log("NEW SEED UPDATE", seedOffset);

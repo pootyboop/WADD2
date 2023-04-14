@@ -10,12 +10,13 @@ let structure;
 let tiles;
 let numOfTilesX = 16;  //how many tiles horizontally
 let numOfTilesY = 16;  //how many tiles vertically
-let scale = 25;        //scale of tiles
+let scale;        //scale of tiles
 //==================================================\\
 
 function setup() {
   //canvas = createCanvas(windowWidth, windowHeight);
-  canvas = createCanvas(600, 600);
+  //canvas = createCanvas(600, 600);
+  resizeGame(true);
   scale = width / numOfTilesX;
   canvas.style('display', 'block');
 
@@ -100,11 +101,9 @@ function drawingSetup() {
   noSmooth();
 }
 
-/*
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeGame(false);
 }
-*/
 
 function setupPlayer(x, y) {
 
@@ -120,4 +119,37 @@ function setupPlayer(x, y) {
 
 function drawOnGrid(img, x, y) {
   image(img, scale * x + scale/2, scale * y + scale/2, scale, scale);
+}
+
+function resizeGame(justLoaded) {
+  let smallerDimension = getSmaller(windowWidth, windowHeight);
+
+  if (justLoaded) {
+    canvas = createCanvas(smallerDimension, smallerDimension);
+  }
+
+  else {
+    resizeCanvas(smallerDimension, smallerDimension);
+  }
+  scale = smallerDimension / getLarger(numOfTilesX, numOfTilesY);
+}
+
+function correctScale(smallerDimension) {
+  return smallerDimension / 24;
+}
+
+function getSmaller(a, b) {
+  if (a < b) {
+    return a;
+  }
+  
+  return b;
+}
+
+function getLarger(a, b) {
+  if (a > b) {
+    return a;
+  }
+  
+  return b;
 }

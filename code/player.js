@@ -10,6 +10,9 @@ class Player {
   }
 
   draw() {
+    if (WFCManager.isGenerating)
+    return;
+
     drawOnGrid(this.img, this.x, this.y);
   }
 
@@ -97,10 +100,18 @@ class Player {
         return true;
       
       case "Water":
-        if (this.logs > 0) {
+        if (this.inventory.logs > 0 && layer != -1) {
           targetTile.collapse("LogWater");
           this.inventory.logs--;
+          return false;
         }
+
+        else if (layer != -1) {
+          return false;
+        }
+        
+      case "None":
+        structure.closeLayer();
         return false;
 
       default:
@@ -117,10 +128,6 @@ class Player {
         case "Boat":
           structure = new Boat(this.x, this.y);
           return false;
-        
-     case "None":
-        structure.closeLayer();
-        return false;
     }
   }
 

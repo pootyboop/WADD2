@@ -1,6 +1,6 @@
 class Structure {
     
-    //no overloading allowed!!! -js
+    //"no overloading allowed!!!" -js
     /*
     constructor(x, y, floorSize) {
         this.x = x;
@@ -176,6 +176,5 @@ class Boat extends Structure {
         for (let i = cY+this.floorSizeY; i < cY+this.floorSizeY+3; i++) {
             tiles[cX][i].collapse("Wood");
         }
-        
     }
 }

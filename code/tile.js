@@ -111,7 +111,7 @@ class Tile {
   
     if (sortedPossibilities.length === 0) {
       if (possibilities.length === 0) {
-        return "Stone";
+        return "None";
       }
       return possibilities[0];
     }
