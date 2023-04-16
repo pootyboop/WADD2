@@ -3,7 +3,9 @@ let canvas;
 let WFCManager;
 let player;
 
-let seed, seedOffset; //seed and offset to use for randomness
+//seed and offset to use for randomness
+let seed;
+let seedOffset = 3;
 let layer = 0;  //height level (0 = ground level)
 let structure;
 
@@ -11,6 +13,10 @@ let tiles;
 let numOfTilesX = 16;  //how many tiles horizontally
 let numOfTilesY = 16;  //how many tiles vertically
 let scale;        //scale of tiles
+let marginPercentage = 10;
+
+let titleFont;
+let showIntroScreen = true;
 //==================================================\\
 
 function setup() {
@@ -33,6 +39,8 @@ function draw() {
       //console.log("   Drew " + tiles[i][j].properties[0] + " (x = " + tiles[i][j].x + ", y = " + tiles[i][j].y + ")");
     }
   }
+
+  introScreen();
 
   player.draw();
 }
@@ -62,8 +70,7 @@ function keyPressed() {
 
 
     case ' ':
-      layer = 0;
-      WFCManager.WFC(player.x, player.y);
+      player.teleport();
       break;
   }
 
@@ -99,6 +106,10 @@ function drawingSetup() {
 
   noStroke();
   noSmooth();
+
+  textAlign(CENTER);
+  titleFont = loadFont("Barriecito-Regular.ttf");
+  textFont(titleFont);
 }
 
 function windowResized() {
@@ -115,6 +126,8 @@ function setupPlayer(x, y) {
     player.x = x;
     player.y = y;
   }
+
+  player.spawnOn(tiles[x][y]);
 }
 
 function drawOnGrid(img, x, y) {
@@ -152,4 +165,21 @@ function getLarger(a, b) {
   }
   
   return b;
+}
+
+function introScreen() {
+  if (!showIntroScreen) {
+    return;
+  }
+
+  background('rgba(255, 255, 255, 0.8)');
+
+  textSize(160);
+  fill(0);
+  text("MuTaBLuS", width*.5, height*.45);
+
+  textSize(40);
+  fill(40);
+  //text("The world mutates when you aren't looking", width*.5, height*.65);
+  text("WASD to move", width*.5, height*.65);
 }

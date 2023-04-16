@@ -17,6 +17,10 @@ class Player {
   }
 
   move(direction) {
+    if (showIntroScreen) {
+      showIntroScreen = false;
+    }
+
     let targetTile;
     switch (direction) {
 
@@ -79,55 +83,138 @@ class Player {
 
   }
 
+  //i deeply apologize for how big this switch is
   interact(targetTile) {
     switch (targetTile.possibilities[0]) {
 
+      default:
+        return true;
+
       case "Sarcophagus":
-      case "Mountain":
+        if (this.inventory.getItem("ore") > 0) {
+          this.inventory.setItem("ore", parseInt(this.inventory.getItem("ore")) - 1);
+          this.inventory.setItem("orb", parseInt(this.inventory.getItem("orb")) + 1);
+        }
+        return false;
+
       case "Wall":
       case "PyramidWall":
+      case "TowerWall":
+      case "TowerStairsUp":
       case "BoatWheel":
       case "Table":
+      case "Snowman":
         return false;
 
       case "Tree":
-        targetTile.collapse("Log");
+        targetTile.collapse("LogGrass");
         return false;
 
-      case "Log":
-        targetTile.collapse("Grass");
-        this.inventory.logs++;
+      case "Pick":
+        targetTile.collapse("Stone");
+        this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) + 1);
         return true;
+
+      case "LogGrass":
+        targetTile.collapse("Grass");
+        this.inventory.setItem("log", parseInt(this.inventory.getItem("log")) + 1);
+        return true;
+
+      case "Ore":
+        targetTile.collapse("Grass");
+        this.inventory.setItem("ore", parseInt(this.inventory.getItem("ore")) + 1);
+        return true;
+
+      case "Orb":
+        targetTile.collapse("TowerFloor");
+        this.inventory.setItem("orb", parseInt(this.inventory.getItem("orb")) + 1);
+        return true;
+
+      case "CaveWall":
+        if (this.inventory.getItem("pick") > 0) {
+          targetTile.collapse("Stone");
+          this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) - 1);
+        }
+        return false;
       
+      case "Mountain":
+        if (this.inventory.getItem("pick") > 0) {
+          targetTile.collapse("Ore");
+          this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) - 1);
+        }
+        return false;
+      
+        //========KEEP THESE TOGETHER===========
       case "Water":
-        if (this.inventory.logs > 0 && layer != -1) {
+        if (this.inventory.getItem("log") > 0 && layer != -1) {
           targetTile.collapse("LogWater");
-          this.inventory.logs--;
+          this.inventory.setItem("log", parseInt(this.inventory.getItem("log")) - 1);
           return false;
         }
 
         else if (layer != -1) {
           return false;
         }
-        
+
+      case "TowerStairsDown":
       case "None":
         structure.closeLayer();
         return false;
-
-      default:
-        return true;
+        //========ENDS HERE========
 
       case "House":
         structure = new House(this.x, this.y);
         return false;
 
-        case "Pyramid":
-          structure = new Pyramid(this.x, this.y);
-          return false;
+      case "Pyramid":
+        structure = new Pyramid(this.x, this.y);
+        return false;
 
-        case "Boat":
-          structure = new Boat(this.x, this.y);
-          return false;
+      case "Cave":
+        structure = new Cave(this.x, this.y);
+        return false;
+
+      case "Boat":
+        structure = new Boat(this.x, this.y);
+        return false;
+
+      case "Tower":
+        structure = new Tower(this.x, this.y);
+        return false;
+  }
+  }
+
+  spawnOn(targetTile) {
+    switch (targetTile.possibilities[0]) {
+
+      default:
+        return;
+
+      case "Mountain":
+      case "Tree":
+      case "LogGrass":
+      case "House":
+          targetTile.collapse("Grass");
+          return;
+      
+      case "Pyramid":
+      case "Water":
+      case "Boat":
+          targetTile.collapse("Sand");
+          return;
+    
+      case "Cave":
+          targetTile.collapse("Stone");
+          return;
+
+    }
+  }
+
+  teleport() {
+    if (this.inventory.getItem("orb") > 0) {
+      this.inventory.setItem("orb", parseInt(this.inventory.getItem("orb")) - 1);
+      layer = 0;
+      WFCManager.WFC(this.x, this.y);
     }
   }
 

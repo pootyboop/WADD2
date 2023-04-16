@@ -35,8 +35,8 @@ class Structure {
         this.structureLayout();
     }
 
+    //overridden by children
     structureLayout() {
-
     }
 
     closeLayer() {
@@ -126,6 +126,41 @@ class Pyramid extends Structure {
 
 
 
+class Cave extends Structure {
+    constructor(x, y) {
+        super(x, y, 8, 6);
+    }
+
+    openLayer() {
+        super.openLayer(Math.floor(numOfTilesX/2), Math.floor(numOfTilesY/2+this.floorSizeY/2));
+    }
+
+    structureLayout() {
+        super.structureLayout();
+
+        let cX = numOfTilesX/2;
+        let cY = numOfTilesY/2;
+
+        for (let i = cX-this.floorSizeX; i < cX+this.floorSizeX+1; i++) {
+
+            for (let j = cY-this.floorSizeY; j < cY+this.floorSizeY+1; j++) {
+                tiles[i][j].collapse("CaveWall");
+            }
+        }
+
+        for (let i = cX-this.floorSizeX+1; i < cX+this.floorSizeX; i++) {
+
+            for (let j = cY-this.floorSizeY+1; j < cY+this.floorSizeY; j++) {
+                tiles[i][j].furnishCave();
+            }
+        }
+
+        tiles[cX][cY+this.floorSizeY].collapse("Stone");
+    }
+}
+
+
+
 class Boat extends Structure {
     constructor(x, y) {
         super(x, y, 10, 4);
@@ -163,6 +198,7 @@ class Boat extends Structure {
 
         tiles[cX-2][cY].collapse("Wall");
         tiles[cX+1][cY].collapse("BoatWheel");
+        tiles[cX+4][cY-1].collapse("Table");
 
         tiles[cX+3][cY-1].collapse("Wall");
         tiles[cX+3][cY+1].collapse("Wall");
@@ -176,5 +212,57 @@ class Boat extends Structure {
         for (let i = cY+this.floorSizeY; i < cY+this.floorSizeY+3; i++) {
             tiles[cX][i].collapse("Wood");
         }
+    }
+}
+
+
+
+class Tower extends Structure {
+    constructor(x, y) {
+        super(x, y, 10, 10);
+    }
+
+    openLayer() {
+        super.openLayer(Math.floor(numOfTilesX/2), Math.floor(numOfTilesY/2+this.floorSizeY/2+1));
+    }
+
+    structureLayout() {
+        super.structureLayout();
+
+        let cX = numOfTilesX/2;
+        let cY = numOfTilesY/2;
+
+        for (let i = cX-this.floorSizeX; i < cX+this.floorSizeY; i++) {
+
+            for (let j = cY-this.floorSizeX; j < cY+this.floorSizeY; j++) {
+                if (Math.sqrt(Math.pow(i - cX, 2) + Math.pow(j - cY, 2)) <= this.floorSizeX-.2) { //the .2 removes some weird edge tiles
+                    tiles[i][j].furnishTower();
+                }
+            }
+        }
+
+        for (let i = cX-this.floorSizeX; i < cX+this.floorSizeY; i++) {
+
+            for (let j = cY-this.floorSizeX; j < cY+this.floorSizeY; j++) {
+                if (tiles[i][j].possibilities[0] !== "None" && tiles[i][j].countAdjacent("None") !== 0) {
+                    tiles[i][j].collapse("TowerWall");
+                }
+            }
+        }
+
+        tiles[cX][cY-this.floorSizeY+1].collapse("TowerStairsUp");
+        tiles[cX][cY+this.floorSizeY-1].collapse("TowerStairsDown");
+
+        tiles[cX][cY].collapse("None");
+
+        /*
+        for (let i = cX-this.floorSizeX+1; i < cX+this.floorSizeX-1; i++) {
+
+            for (let j = cY-this.floorSizeY+1; j < cY+this.floorSizeY-1; j++) {
+                tiles[i][j].collapse("TowerFloor");
+                tiles[i][j].furnishHouse();
+            }
+        }
+        */
     }
 }

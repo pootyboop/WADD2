@@ -24,6 +24,9 @@ class Tile {
     if (seed % 4 === 1) {
       this.possibilities.push("Pyramid");
     }
+    if ((seed + 1) % 4  === 1) {
+      this.possibilities.push("Cave");
+    }
 
     this.collapsed = false;
   }
@@ -161,6 +164,9 @@ class Tile {
       case "Pyramid":
         this.isolatePyramids();
         break;
+      case "Cave":
+        this.isolateCaves();
+        break;
       case "Tree":
         this.fellTrees();
     }
@@ -191,6 +197,7 @@ class Tile {
           this.collapse("Water");
           break;
         case "Stone":
+        case "Cave":
           this.collapse("Sand");
           break;
         case "Mountain":
@@ -247,11 +254,35 @@ class Tile {
           break;
       }
     }
+  
+    //frozen
+    if ((seed + 2) % 5 == 1) {
+      switch (this.possibilities[0]) {
+        case "Tree":
+          if ((seed + 2) % 10 == 1) {
+            this.collapse("Snowman");
+            break;
+          }
+        case "Grass":
+        case "Mountain":
+        case "Sand":
+          this.collapse("Snow");
+          break;
+        case "House":
+        case "Pyramid":
+          this.collapse("Tower");
+          break;
+        case "Water":
+        case "Boat":
+          this.collapse("Ice");
+          break;
+      }
+    }
   }
 
   fellTrees() {
     if (this.seedRandom() < .3 && this.countAdjacent("Tree") <= 2 && this.countAllNear("Log") <= 0) {
-      this.collapse("Log");
+      this.collapse("LogGrass");
     }
   }
   
@@ -290,6 +321,12 @@ class Tile {
       this.collapse("Sand");
     }
   }
+  
+  isolateCaves() {
+    if (this.countAllNear("Cave") >= 1) {
+      this.collapse("Stone");
+    }
+  }
 
   furnishHouse() {
     if (this.seedRandom() < .2 && this.countAllNear("Wall") >= 3) {
@@ -297,6 +334,32 @@ class Tile {
     }
     else if (this.seedRandom() < .2 && this.countAllNear("Table") >= 1) {
       this.collapse("Stool");
+    }
+  }
+
+  furnishCave() {
+    let seedRandom = this.seedRandom()
+    
+    if (seedRandom < .05) {
+      this.collapse("CaveWall");
+    }
+    
+    else if (seedRandom < .1) {
+      this.collapse("Pick");
+    }
+
+    else {
+        this.collapse("Stone");
+    }
+  }
+
+  furnishTower() {
+    if (this.seedRandom() < .1 && this.countAllNear("Wall") === 0) {
+      this.collapse("Orb");
+    }
+
+    else {
+      this.collapse("TowerFloor");
     }
   }
   
@@ -329,7 +392,12 @@ class Tile {
   }
   
   removeIsolated() {
-    if (this.seedRandom() < 0.4 && this.possibilities[0] != "Mountain" && this.possibilities[0] != "Tree" && this.possibilities[0] != "Pyramid") {
+    if (this.seedRandom() < 0.4 &&
+    this.possibilities[0] != "Mountain" &&
+    this.possibilities[0] != "Tree" &&
+    this.possibilities[0] != "Pyramid" &&
+    this.possibilities[0] != "Boat" &&
+    this.possibilities[0] != "Cave") {
       let all = this.adjacent.concat(this.corners);
       for (let i = 0; i < all.length; i++) {
         if (all[i].possibilities.includes(this.possibilities[0])) {
@@ -347,6 +415,7 @@ class Tile {
     let seedRandom = (seed + seedOffset) % 100.0 / 100.0;
   
     //console.log("Weight: " + seedPosition);
+    //console.log(seedRandom);
     return seedRandom;
   }
 
@@ -360,6 +429,7 @@ class Tile {
         invalids.push("Tree");
         invalids.push("House");
         invalids.push("Pyramid");
+        invalids.push("Cave");
         break;
       case "Sand":
         invalids.push("Mountain");
@@ -367,11 +437,13 @@ class Tile {
         invalids.push("Stone");
         invalids.push("House");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "Grass":
         invalids.push("Water");
         invalids.push("Pyramid");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "Stone":
         invalids.push("Tree");
@@ -389,6 +461,7 @@ class Tile {
         invalids.push("Stone");
         invalids.push("Pyramid");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "Tree":
         invalids.push("Water");
@@ -398,6 +471,7 @@ class Tile {
         invalids.push("House");
         invalids.push("Pyramid");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "House":
         invalids.push("Sand");
@@ -407,6 +481,7 @@ class Tile {
         invalids.push("House");
         invalids.push("Pyramid");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "Pyramid":
         invalids.push("Stone");
@@ -417,6 +492,7 @@ class Tile {
         invalids.push("House");
         invalids.push("Pyramid");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
       case "Boat":
         invalids.push("Pyramid");
@@ -427,7 +503,18 @@ class Tile {
         invalids.push("Sand");
         invalids.push("Stone");
         invalids.push("Boat");
+        invalids.push("Cave");
         break;
+      case "Cave":
+        invalids.push("Grass");
+        invalids.push("Mountain");
+        invalids.push("Tree");
+        invalids.push("House");
+        invalids.push("Pyramid");
+        invalids.push("Boat");
+        invalids.push("Sand");
+        invalids.push("Water");
+          break;
 
     }
     
@@ -444,7 +531,7 @@ class Tile {
         return 0.4;
       case "Tree":
         return 0.9;
-      case "Log":
+      case "LogGrass":
         return 0.91;
       case "Mountain":
         return 0.05;
@@ -454,6 +541,8 @@ class Tile {
         return 0.41;
       case "Pyramid":
         return 0.01;
+      case "Cave":
+        return 0.65;
       case "Boat":
         return 0.06;
     }
