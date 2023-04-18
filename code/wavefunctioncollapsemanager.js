@@ -8,30 +8,42 @@ class WaveFunctionCollapseManager {
     WFC(x, y) {
         this.isGenerating = true;
 
-        background(0);
+        this.loadingScreen();
+
         this.initTiles();
         this.newSeed();
-        console.log("NEW SEED UPDATE", seedOffset);
+        //console.log("NEW SEED UPDATE", seedOffset);
 
         this.collapseInitial(numOfTilesX/2, numOfTilesY/2);
-        console.log("COLLAPSE INITIAL UPDATE", seedOffset);
+        //console.log("COLLAPSE INITIAL UPDATE", seedOffset);
         this.collapseAllTiles();
-        console.log("COLLAPSE ALL UPDATE", seedOffset);
+        //console.log("COLLAPSE ALL UPDATE", seedOffset);
 
-        this.firstPass();
-        console.log("PASS 1 UPDATE", seedOffset);
-        this.secondPass();
-        console.log("PASS 2 UPDATE", seedOffset);
-        this.removeIsolated();
-        console.log("REMOVE ISOLATED UPDATE", seedOffset);
+        this.cleanupTerrain();
 
         setupPlayer(x, y);
 
         this.isGenerating = false;
 
-        console.log("Final Seed Position", seedOffset);
+        //console.log("Final Seed Position", seedOffset);
 
-        console.log("Done generating!");
+        //console.log("Done generating!");
+    }
+
+    cleanupTerrain() {
+      this.firstPass();
+      //console.log("PASS 1 UPDATE", seedOffset);
+      this.secondPass();
+      //console.log("PASS 2 UPDATE", seedOffset);
+      this.removeIsolated();
+      //console.log("REMOVE ISOLATED UPDATE", seedOffset);
+    }
+
+    loadingScreen() {
+      background(20);
+      textSize(100);
+      fill(100);
+      text("LoaDiNg...", width*.5,height*.5);
     }
 
     initTiles() {
@@ -57,7 +69,7 @@ class WaveFunctionCollapseManager {
         if (layer == 0) {
             seed = Math.floor(Math.random() * 99999999);
         }
-        console.log("Seed", seed);
+        //console.log("Seed", seed);
     }
 
     collapseInitial(x, y) {

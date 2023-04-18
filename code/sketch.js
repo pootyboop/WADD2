@@ -1,22 +1,20 @@
 //=====================SETTINGS=====================\\
-let canvas;
-let WFCManager;
-let player;
+let canvas;             //p5js (processing) canvas
+let WFCManager;         //manages wave function collapse
+let player;             //player ref
 
-//seed and offset to use for randomness
-let seed;
-let seedOffset = 3;
-let layer = 0;  //height level (0 = ground level)
-let structure;
+let seed;               //world gen seed
+let seedOffset = 3;     //offset to use for randomness
+let layer = 0;          //height level (0 = ground level)
+let structure;          //currently open structure
 
 let tiles;
-let numOfTilesX = 16;  //how many tiles horizontally
-let numOfTilesY = 16;  //how many tiles vertically
-let scale;        //scale of tiles
-let marginPercentage = 10;
+let numOfTilesX = 16;   //how many tiles horizontally
+let numOfTilesY = 16;   //how many tiles vertically
+let scale;              //scale of tiles
 
-let titleFont;
-let showIntroScreen = true;
+let titleFont;              //title screen font
+let showIntroScreen = true; //whether or not to show the title screen
 //==================================================\\
 
 function setup() {
@@ -25,6 +23,8 @@ function setup() {
   resizeGame(true);
   scale = width / numOfTilesX;
   canvas.style('display', 'block');
+  canvas.style('border-radius', '25px');
+  canvas.parent("canvas");
 
   drawingSetup();
   WFCManager = new WaveFunctionCollapseManager();
@@ -174,11 +174,11 @@ function introScreen() {
 
   background('rgba(255, 255, 255, 0.8)');
 
-  textSize(160);
+  textSize(width*.22);
   fill(0);
   text("MuTaBLuS", width*.5, height*.45);
 
-  textSize(40);
+  textSize(width*.06);
   fill(40);
   //text("The world mutates when you aren't looking", width*.5, height*.65);
   text("WASD to move", width*.5, height*.65);

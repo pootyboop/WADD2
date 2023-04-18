@@ -3,28 +3,42 @@ html, body {
 }
 
 body {
-  background-color: #000000;
-
-  padding: 0;
-  margin: 0;
-  display: flex;
-
-  justify-content: center;
+  background-color: #121212;
   /*align-items: center;*/
 }
 
-main {
-  display: flex;
-  flex-direction: column;
+p, a, li, img {
+  color: #FFFFFF;
+  font-family: 'Barriecito', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  margin-bottom: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #6bb96f;
+  color: #FFFFFF;
   text-align: center;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Barriecito', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 h1 {
-  font-size: 3.5rem;
-  line-height: 0px;
+  color: #6bb96f;
+  font-size: 4rem;
+  /*line-height: 0px;*/
+}
+
+h2 {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.bold {
+  font-weight: bold;
 }

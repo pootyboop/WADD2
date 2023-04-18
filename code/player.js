@@ -91,7 +91,12 @@ class Player {
         return true;
 
       case "Sarcophagus":
-        if (this.inventory.getItem("ore") > 0) {
+        if (this.inventory.getItem("idol") > 0) {
+          this.inventory.setItem("idol", parseInt(this.inventory.getItem("idol")) - 1);
+          this.inventory.setItem("orb", parseInt(this.inventory.getItem("orb")) + 10);
+        }
+
+        else if (this.inventory.getItem("ore") > 0) {
           this.inventory.setItem("ore", parseInt(this.inventory.getItem("ore")) - 1);
           this.inventory.setItem("orb", parseInt(this.inventory.getItem("orb")) + 1);
         }
@@ -104,6 +109,7 @@ class Player {
       case "BoatWheel":
       case "Table":
       case "Snowman":
+      case "TotemComplete":
         return false;
 
       case "Tree":
@@ -143,6 +149,39 @@ class Player {
           this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) - 1);
         }
         return false;
+    
+      case "SnowmanArmless":
+      if (this.inventory.getItem("log") >= 2) {
+        targetTile.collapse("Snowman");
+        this.inventory.setItem("log", parseInt(this.inventory.getItem("log")) - 2);
+        return false;
+      }
+    
+      case "Totem":
+      if (this.inventory.getItem("idol") > 0) {
+        targetTile.collapse("TotemComplete");
+        this.inventory.setItem("idol", parseInt(this.inventory.getItem("idol")) - 1);
+        this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) + 5);
+        this.inventory.setItem("shovel", parseInt(this.inventory.getItem("shovel")) + 2);
+        return false;
+      }
+    
+      case "Workbench":
+      if (this.inventory.getItem("log") >= 3 && this.inventory.getItem("ore") >= 2) {
+        this.inventory.setItem("log", parseInt(this.inventory.getItem("log")) - 3);
+        this.inventory.setItem("ore", parseInt(this.inventory.getItem("ore")) - 2);
+        this.inventory.setItem("shovel", parseInt(this.inventory.getItem("shovel")) + 1);
+      }
+      return false;
+    
+      case "Digsite":
+      if (this.inventory.getItem("shovel") > 0) {
+        targetTile.collapse("Sand");
+        this.inventory.setItem("shovel", parseInt(this.inventory.getItem("shovel")) - 1);
+        this.inventory.setItem("idol", parseInt(this.inventory.getItem("idol")) + 1);
+        return false;
+      }
+      return true;
       
         //========KEEP THESE TOGETHER===========
       case "Water":
@@ -194,18 +233,25 @@ class Player {
       case "Tree":
       case "LogGrass":
       case "House":
-          targetTile.collapse("Grass");
-          return;
+      case "Totem":
+        targetTile.collapse("Grass");
+        return;
       
       case "Pyramid":
       case "Water":
       case "Boat":
-          targetTile.collapse("Sand");
-          return;
+        targetTile.collapse("Sand");
+        return;
     
       case "Cave":
-          targetTile.collapse("Stone");
-          return;
+        targetTile.collapse("Stone");
+        return;
+
+      case "Snowman":
+      case "SnowmanArmless":
+      case "Tower":
+        targetTile.collapse("Snow");
+        return;
 
     }
   }

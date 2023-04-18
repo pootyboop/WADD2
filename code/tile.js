@@ -38,7 +38,7 @@ class Tile {
   }
 
   getImage() {
-    return loadImage('images/' + this.possibilities[0] + '.png');
+    return loadImage('images/tiles/' + this.possibilities[0] + '.png');
   }
 
   setAdjacent() {
@@ -167,6 +167,10 @@ class Tile {
       case "Cave":
         this.isolateCaves();
         break;
+      case "Grass":
+      case "Tree":
+        this.spawnTotems();
+        break;
       case "Tree":
         this.fellTrees();
     }
@@ -175,6 +179,7 @@ class Tile {
   secondPass() {
     switch (this.possibilities[0]) {
       case "Sand":
+        this.createDigsite();
         this.growGrass();
         break;
       case "Stone":
@@ -260,7 +265,18 @@ class Tile {
       switch (this.possibilities[0]) {
         case "Tree":
           if ((seed + 2) % 10 == 1) {
-            this.collapse("Snowman");
+            let seedRandom = this.seedRandom();
+            if (seedRandom < .3) {
+              this.collapse("Snowman");
+            }
+
+            else if (seedRandom < .5) {
+              this.collapse("SnowmanArmless");
+            }
+            
+            else {
+              this.collapse("Snow");
+            }
             break;
           }
         case "Grass":
@@ -285,6 +301,12 @@ class Tile {
       this.collapse("LogGrass");
     }
   }
+
+  createDigsite() {
+    if (this.seedRandom() < .05 && seed % 2 === 1 && this.countAllNear("Sand") >= 4 && this.countAllNear("Digsite") === 0) {
+      this.collapse("Digsite");
+    }
+  }
   
   growGrass() {
     if (this.countAdjacent("Grass") >= 5 && this.countAllNear("Water") <= 0) {
@@ -299,8 +321,14 @@ class Tile {
   }
   
   drySmallPonds() {
-    if (this.countAllNear("Water") <= 0) {
+    if (this.countAllNear("Water") === 0) {
       this.collapse("Grass");
+    }
+  }
+
+  spawnTotems() {
+    if (this.seedRandom() < .002 && seed % 6 === 1) {
+      this.collapse("Totem");
     }
   }
   
@@ -334,6 +362,9 @@ class Tile {
     }
     else if (this.seedRandom() < .2 && this.countAllNear("Table") >= 1) {
       this.collapse("Stool");
+    }
+    else if (this.seedRandom() < .1) {
+      this.collapse("Workbench");
     }
   }
 

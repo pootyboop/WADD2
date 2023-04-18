@@ -1,16 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">\
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mutablus</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <!--FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap" rel="stylesheet">
+    <!-------->
+
     <link rel="icon" href="images/favicon.ico">
   </head>
 
   <body>
     <main>
       <!-- <h1>MUTABLUS</h1> -->
+      <ul class="sidebar">
+
+        <li>
+          <img src="images/inv/Log.png" alt="Log" class="inv-item" id="log">
+          <p class="inv-item-ct" id="log-ct">0</p>
+        </li>
+
+        <li>
+          <img src="images/inv/Ore.png" alt="Ore" class="inv-item" id="ore">
+          <p class="inv-item-ct" id="ore-ct">0</p>
+        </li>
+        
+        <li>
+          <img src="images/inv/Pick.png" alt="Pick" class="inv-item" id="pick">
+          <p class="inv-item-ct" id="pick-ct">0</p>
+        </li>
+        
+        <li>
+          <img src="images/inv/Shovel.png" alt="Shovel" class="inv-item" id="shovel">
+          <p class="inv-item-ct" id="shovel-ct">0</p>
+        </li>
+
+        <li>
+          <img src="images/inv/Orb.png" alt="Orb" class="inv-item" id="orb">
+          <p class="inv-item-ct" id="orb-ct">0</p>
+        </li>
+
+        <li>
+          <img src="images/inv/Idol.png" alt="Idol" class="inv-item" id="idol">
+          <p class="inv-item-ct" id="idol-ct">0</p>
+        </li>
+
+      </ul>
+
+      <div id="canvas"></div>
+
+      <ul class="sidebar">
+        <li class="li-justify">
+          <a href="howtoplay.html" class="sidebar-link">How to Play</a>
+        </li>
+        <li class="li-justify">
+          <a href="thingstofind.html" class="sidebar-link">Things to Find</a>
+        </li>
+      </ul>
+
 
       <script src="../p5.min.js"></script>
       <!-- <script src="../addons/p5.sound.js"></script> -->
