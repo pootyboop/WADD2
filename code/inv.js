@@ -6,7 +6,7 @@ class Inv {
     }
 
     initItems() {
-        let items = ["log", "ore", "pick", "shovel", "orb", "idol"];
+        let items = ["log", "ore", "pick", "shovel", "map", "orb", "idol"];
         for (let i = 0; i < items.length; i++) {
             let ct = getItem(items[i])
             if (ct > 0) {

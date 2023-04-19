@@ -149,6 +149,16 @@ class Player {
           this.inventory.setItem("pick", parseInt(this.inventory.getItem("pick")) - 1);
         }
         return false;
+      
+      case "MapWood":
+        targetTile.collapse("Wood");
+        this.inventory.setItem("map", parseInt(this.inventory.getItem("map")) + 1);
+        return true;
+
+      case "MapStone":
+        targetTile.collapse("Stone");
+        this.inventory.setItem("map", parseInt(this.inventory.getItem("map")) + 1);
+        return true;
     
       case "SnowmanArmless":
       if (this.inventory.getItem("log") >= 2) {
@@ -262,6 +272,31 @@ class Player {
       layer = 0;
       WFCManager.WFC(this.x, this.y);
     }
+  }
+
+  useMap() {
+    if (this.inventory.getItem("map") <= 0) {
+      return;
+    }
+
+    this.inventory.setItem("map", parseInt(this.inventory.getItem("map")) - 1);
+
+    let targetTile = tiles[this.randomCoords(false)][this.randomCoords(true)];
+    targetTile.useMap();
+  }
+
+  randomCoords(isY) {
+    let max;
+
+    if (isY) {
+      max = numOfTilesY;
+    }
+
+    else {
+      max = numOfTilesX;
+    }
+
+    return Math.floor(Math.random() * max);
   }
 
 }

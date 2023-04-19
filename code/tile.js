@@ -363,6 +363,9 @@ class Tile {
     else if (this.seedRandom() < .2 && this.countAllNear("Table") >= 1) {
       this.collapse("Stool");
     }
+    else if (this.seedRandom() < .01) {
+      this.collapse("MapWood");
+    }
     else if (this.seedRandom() < .1) {
       this.collapse("Workbench");
     }
@@ -370,12 +373,16 @@ class Tile {
 
   furnishCave() {
     let seedRandom = this.seedRandom()
-    
-    if (seedRandom < .05) {
+
+    if (seedRandom < .01) {
+      this.collapse("MapStone");
+    }
+
+    else if (seedRandom < .1) {
       this.collapse("CaveWall");
     }
     
-    else if (seedRandom < .1) {
+    else if (seedRandom < .2) {
       this.collapse("Pick");
     }
 
@@ -579,6 +586,41 @@ class Tile {
     }
     
     return 1.0;
+  }
+
+  useMap() {
+    switch (this.possibilities[0]) {
+      case "Grass":
+      case "Mountain":
+      case "Tree":
+        if (this.seedRandom() < .1) {
+          this.collapse("Totem");
+        }
+        else {
+          this.collapse("House");
+        }
+        return;
+
+      case "Sand":
+        this.collapse("Pyramid");
+        return;
+
+      case "Stone":
+        this.collapse("Cave");
+        return;
+
+      case "Water":
+      case "Ice":
+        this.collapse("Boat");
+        return;
+
+      case "Snow":
+        this.collapse("SnowmanArmless");
+        return;
+
+      default:
+        return;
+    }
   }
 
   sortPossibilities(possibilities) {

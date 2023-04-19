@@ -198,7 +198,9 @@ class Boat extends Structure {
 
         tiles[cX-2][cY].collapse("Wall");
         tiles[cX+1][cY].collapse("BoatWheel");
+
         tiles[cX+4][cY-1].collapse("Table");
+        tiles[cX+4][cY+1].collapse("MapWood");
 
         tiles[cX+3][cY-1].collapse("Wall");
         tiles[cX+3][cY+1].collapse("Wall");

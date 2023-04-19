@@ -52,18 +52,22 @@ function keyPressed() {
   switch (key) {
 
     case 'w':
+    case 'W':
       player.move("up");
       break;
 
     case 's':
+    case 'S':
       player.move("down");
       break;
 
     case 'a':
+    case 'A':
       player.move("left");
       break;
 
     case 'd':
+    case 'D':
       player.move("right");
       break;
   
@@ -71,6 +75,11 @@ function keyPressed() {
 
     case ' ':
       player.teleport();
+      break;
+
+    case 'm':
+    case 'M':
+      player.useMap();
       break;
   }
 
