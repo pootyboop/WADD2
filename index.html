@@ -3,22 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Procedurally generated exploration!">
+    <meta name="theme-color" content="#6bb96f">
     <title>Mutablus</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/index.css">
 
-    <!--FONT-->
+    <!-- FONT -->
+    <!--link code from "https://fonts.google.com/specimen/Barriecito?query=barriec" (click <link> once family is selected)-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap" rel="stylesheet">
-    <!-------->
+    <!---->
 
     <link rel="icon" href="images/favicon.ico">
   </head>
 
   <body>
     <main>
-      <!-- <h1>MUTABLUS</h1> -->
+
+
+
+      <!-- INVENTORY -->
       <ul class="sidebar">
 
         <li>
@@ -57,9 +63,17 @@
         </li>
 
       </ul>
+      <!---->
 
+
+
+      <!-- PROCESSING CANVAS -->
       <div id="canvas"></div>
+      <!---->
 
+
+
+      <!-- LINKS -->
       <ul class="sidebar">
         <li class="li-justify">
           <a href="howtoplay.html" class="sidebar-link">How to Play</a>
@@ -68,16 +82,22 @@
           <a href="thingstofind.html" class="sidebar-link">Things to Find</a>
         </li>
       </ul>
+      <!---->
 
 
-      <script src="../p5.min.js"></script>
-      <!-- <script src="../addons/p5.sound.js"></script> -->
-      <script src="sketch.js"></script>
-      <script src="tile.js"></script>
-      <script src="player.js"></script>
-      <script src="inv.js"></script>
-      <script src="wavefunctioncollapsemanager.js"></script>
-      <script src="structure.js"></script>
+
+      <!-- SCRIPTS -->
+      <script src="js/p5js/p5.min.js"></script>                  <!--P5JS DO NOT REMOVE-->
+      <script src="js/sketch.js"></script>                       <!--High scope, basic processing functions-->
+      <script src="js/wavefunctioncollapsemanager.js"></script>  <!--WFC manager (responsible for worldgen)-->
+      <script src="js/tile.js"></script>                         <!--Tile (individual Tiles on grid)-->
+      <script src="js/player.js"></script>                       <!--Player (deals with player interactions)-->
+      <script src="js/inv.js"></script>                          <!--Inventory (manages localStorage)-->
+      <script src="js/structure.js"></script>                    <!--Structure (layouts for houses, caves, etc.)-->
+      <!---->
+
+
+
     </main>
   </body>
 </html>

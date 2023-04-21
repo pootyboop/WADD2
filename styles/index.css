@@ -1,0 +1,85 @@
+/*
+styles for game screen
+should not be used anywhere else
+*/
+
+body {
+  display: flex;
+  justify-content: center;
+
+  /*fill the screen*/
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  display: flex;
+  /*centre the sidebar-game-sidebar sandwich*/
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*the bars to the left and right of the game viewport*/
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: center;
+
+  margin: 2%;
+  max-height: 100%;
+
+  background-color: #343434;
+  /*round corners*/
+  border-radius: 15px;
+
+  /*allows me to use <ul> without those icky bullet points*/
+  list-style: none;
+  /*and delete the empty space those icky bullet points left behind*/
+  padding-left: 0;
+}
+
+/*item sprites in left sidebar*/
+.inv-item {
+  /*prevent pixel art compression*/
+  image-rendering: pixelated;
+  margin: 1%;
+  /*items are greyed out by default - this is managed by inv.js*/
+  filter: grayscale(100%);
+  width: 64px;
+}
+
+/*links to info tabs*/
+.sidebar-link  {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/*add a matching background to item sprites and info tabs
+this helps the right sidebar look a little less ugly*/
+.inv-item, .sidebar-link {
+  background-color: #565656;
+  border-radius: 15px;
+}
+
+/*the item count displayed beneath each item*/
+.inv-item-ct {
+  font-size: 2rem;
+  text-align: center;
+
+  /*prevent big gross gaps between items*/
+  margin: 0;
+  /*make the item count overlap the item sprite*/
+  margin-top: -40px;
+
+  /*necessary for z-index to work*/
+  position: relative;
+
+  z-index: 10;
+}
+
+/*ensures the sidebar <ul>s are centred*/
+.li-justify {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,71 @@
+/*
+styles for information/tutorial pages
+should not be used on home (game) page
+*/
+
+main {
+    /*big side margins - this will make porting to mobile way easier
+    another nice side effect is that it requires more scrolling. less unintended spoilers*/
+    margin: 25%;
+    margin-top: 8%;
+    padding: 2%;
+  
+    border-radius: 15px;
+    background-color: #232323;
+}
+
+/*big "MUTABLUS" text that takes you back to the game*/
+#home-link {
+font-size: 2.5rem;
+font-weight: 700;
+}
+
+#navbar {
+position: fixed;
+top: 0;
+
+/*shouldn't need this but i can't get the navbar to look right without it
+prevents a weird margin gap between the navbar and the left side of the window
+*/
+left: 0;
+
+width: 100%;
+margin: 0;
+
+display: flex;
+flex-direction: row;
+align-items: baseline;
+
+background-color: #343434;
+}
+
+/*tab in navbar*/
+.navbar-link {
+color: #FFFFFF;
+margin: 20px;
+background-color: #565656;
+border-radius: 15px;
+padding: 10px;
+line-height: 0.5;
+}
+
+/*currently open tab*/
+#navbar-selected {
+color: #6bb96f;
+font-weight: 700;
+}
+
+img {
+    /*images should be front and center to grab attention
+    this also helps break up the text
+    nobody wants to go from playing a game to reading a wall of text*/
+    display: block;
+    width: 400px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /*keep pixel art nice n crispy*/
+    image-rendering: pixelated;
+}

@@ -1,0 +1,58 @@
+/*
+styles for all pages
+*/
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: #121212;
+}
+
+/*base styling for basic elements*/
+p, a, li, img {
+  color: #FFFFFF;
+
+  /*HTML will attempt to load Barriecito from google fonts on startup
+  if it fails, fall back to backup fonts*/
+  font-family: 'Barriecito', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+a {
+  /*remove underline*/
+  text-decoration: none;
+}
+
+li {
+  /*space out <li>s a bit
+  looks nicer for stuff like Controls on How to Play
+  didn't use line-height here since it affects all lines
+  and i just wanted more margin between <li>s*/
+  margin-bottom: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #6bb96f;
+  text-align: center;
+  
+  /*HTML will attempt to load Barriecito from google fonts on startup
+  if it fails, fall back to backup fonts*/
+  font-family: 'Barriecito', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/*heading sizes*/
+h1 {
+  font-size: 4rem;
+}
+h2 {
+  font-size: 3rem;
+}
+
+/*highlighted areas of text - usually <li> names*/
+.highlight {
+  font-weight: bold;
+  color: #6bb96f;
+}
